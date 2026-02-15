@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Days Between Two Dates Calculator | 日期间隔计算 – DateCalc</title>
+<meta name="description" content="Calculate the exact number of days, weeks, and months between any two dates. Free online tool. 计算两个日期之间的天数。">
+<meta name="keywords" content="days between dates, date difference calculator, 日期间隔, 天数计算">
+<link rel="canonical" href="https://rorojiao.github.io/datecalc/between.html">
+<link rel="stylesheet" href="style.css"><script src="i18n.js"></script>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html"><span>📅</span> DateCalc</a>
+  <div class="links">
+    <a href="index.html" data-i18n="home">Home</a>
+    <a href="between.html" class="active" data-i18n="between">Days Between</a>
+    <a href="add.html" data-i18n="add">Add/Sub Days</a>
+    <a href="age.html" data-i18n="age">Age Calc</a>
+    <a href="weekday.html" data-i18n="weekday">Weekday</a>
+  </div>
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">中文</button>
+</nav>
+<section class="hero"><h1 data-i18n="tool1_t">Days Between Dates</h1><p data-i18n="tool1_d"></p></section>
+<div class="card">
+  <div class="row">
+    <div><label data-i18n="start_date">Start Date</label><input type="date" id="d1"></div>
+    <div><label data-i18n="end_date">End Date</label><input type="date" id="d2"></div>
+  </div>
+  <button class="btn" onclick="calc()" data-i18n="calc">Calculate</button>
+  <div class="result" id="res"></div>
+</div>
+<footer><div data-i18n="footer"></div><div class="donate"><span data-i18n="donate_label"></span> <code>0xEeD903787Cb86bcCc17777E5C7d10A4c2De43823</code></div></footer>
+<script>
+function calc(){
+  const a=new Date(document.getElementById('d1').value);
+  const b=new Date(document.getElementById('d2').value);
+  if(isNaN(a)||isNaN(b))return;
+  const diff=Math.round(Math.abs(b-a)/864e5);
+  const w=Math.floor(diff/7), d=diff%7, m=(diff/30.44).toFixed(1);
+  document.getElementById('res').innerHTML=
+    `<div class="big">${t('result_days').replace('{n}',diff.toLocaleString())}</div>
+     <div class="detail">${t('result_detail').replace('{w}',w).replace('{d}',d).replace('{m}',m)}</div>`;
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const today=new Date(), prior=new Date();prior.setDate(prior.getDate()-30);
+  document.getElementById('d1').valueAsDate=prior;
+  document.getElementById('d2').valueAsDate=today;
+});
+</script>
+</body></html>

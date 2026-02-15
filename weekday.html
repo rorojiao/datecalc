@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What Day of the Week Was It? | 星期几查询 – DateCalc</title>
+<meta name="description" content="Find out what day of the week any date falls on, plus what happened on this day in history. 查询任意日期是星期几。">
+<link rel="canonical" href="https://rorojiao.github.io/datecalc/weekday.html">
+<link rel="stylesheet" href="style.css"><script src="i18n.js"></script>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html"><span>📅</span> DateCalc</a>
+  <div class="links">
+    <a href="index.html" data-i18n="home">Home</a>
+    <a href="between.html" data-i18n="between">Days Between</a>
+    <a href="add.html" data-i18n="add">Add/Sub Days</a>
+    <a href="age.html" data-i18n="age">Age Calc</a>
+    <a href="weekday.html" class="active" data-i18n="weekday">Weekday</a>
+  </div>
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">中文</button>
+</nav>
+<section class="hero"><h1 data-i18n="tool4_t">Day of Week</h1><p data-i18n="tool4_d"></p></section>
+<div class="card">
+  <label data-i18n="pick_date">Pick a Date</label><input type="date" id="wd">
+  <button class="btn" onclick="calc()" data-i18n="find_weekday">Find Weekday</button>
+  <div class="result" id="res"></div>
+  <h2 style="margin-top:28px" data-i18n="on_this_day">On This Day in History</h2>
+  <ul class="history-list" id="history"></ul>
+</div>
+<footer><div data-i18n="footer"></div><div class="donate"><span data-i18n="donate_label"></span> <code>0xEeD903787Cb86bcCc17777E5C7d10A4c2De43823</code></div></footer>
+<script>
+const EVENTS={
+"01-01":["1502 – Portuguese explorers reach Rio de Janeiro","1912 – Republic of China established / 中华民国成立"],
+"01-27":["1945 – Auschwitz liberated by Soviet troops"],
+"02-14":["1929 – St. Valentine's Day Massacre in Chicago"],
+"03-08":["1917 – International Women's Day protests spark Russian Revolution"],
+"04-12":["1961 – Yuri Gagarin becomes first human in space"],
+"05-01":["1886 – Haymarket affair begins in Chicago","International Workers' Day / 国际劳动节"],
+"06-06":["1944 – D-Day: Allied invasion of Normandy"],
+"07-04":["1776 – US Declaration of Independence"],
+"07-20":["1969 – Apollo 11: first humans land on the Moon"],
+"08-06":["1945 – Atomic bomb dropped on Hiroshima"],
+"09-11":["2001 – September 11 attacks in the United States"],
+"10-01":["1949 – People's Republic of China founded / 中华人民共和国成立"],
+"10-24":["1945 – United Nations officially established"],
+"11-09":["1989 – Fall of the Berlin Wall"],
+"12-25":["Christmas Day celebrated worldwide"],
+};
+function calc(){
+  const d=new Date(document.getElementById('wd').value);
+  if(isNaN(d))return;
+  const wd=weekdayName(d.getDay());
+  document.getElementById('res').innerHTML=
+    `<div class="big">${wd}</div><div class="detail">${fmtDate(d)}</div>`;
+  const key=String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const ev=EVENTS[key]||[];
+  const ul=document.getElementById('history');
+  ul.innerHTML=ev.length ? ev.map(e=>`<li>${e}</li>`).join('') : `<li style="color:var(--text-muted)">${lang==='zh'?'暂无记录':'No notable events found for this date.'}</li>`;
+}
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('wd').valueAsDate=new Date();});
+</script>
+</body></html>
